@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Conference Registration</title>
+</head>
+<body>
+
+  <h1>Conference Registration Form</h1>
+
+  <form action="#" method="POST">
+
+    <fieldset>
+      <legend>Personal Information</legend>
+      
+      <p>
+        <label for="fullName">Full Name:</label><br>
+        <input type="text" id="fullName" name="fullName" required minlength="2" autocomplete="name">
+      </p>
+
+      <p>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </p>
+
+      <p>
+        <label for="phone">Phone Number:</label><br>
+        <input type="tel" id="phone" name="phone" pattern="[0-9\-\+\s]{7,15}" required autocomplete="tel">
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Ticket & Workshops</legend>
+
+      <p>
+        <label for="ticketType">Ticket Type:</label><br>
+        <select id="ticketType" name="ticketType" required onchange="checkTicket()">
+          <option value="">-- Select --</option>
+          <option value="standard">Standard</option>
+          <option value="vip">VIP</option>
+          <option value="student">Student</option>
+        </select>
+      </p>
+
+      <p id="studentBox" style="display: none;">
+        <label for="studentId">Upload Student ID (PDF, JPG, PNG):</label><br>
+        <input type="file" id="studentId" name="studentId" accept=".pdf,.jpg,.jpeg,.png">
+      </p>
+
+      <p>
+        <label>Workshops:</label><br>
+        <input type="checkbox" id="w1" name="workshops" value="web-performance">
+        <label for="w1">Web Performance</label><br>
+        
+        <input type="checkbox" id="w2" name="workshops" value="accessibility">
+        <label for="w2">Accessibility</label><br>
+        
+        <input type="checkbox" id="w3" name="workshops" value="testing">
+        <label for="w3">Testing</label>
+      </p>
+
+      <p>
+        <label>Dietary Restrictions:</label><br>
+        <input type="radio" id="d1" name="diet" value="none" onclick="checkDiet()" checked>
+        <label for="d1">None</label><br>
+
+        <input type="radio" id="d2" name="diet" value="vegan" onclick="checkDiet()">
+        <label for="d2">Vegan</label><br>
+
+        <input type="radio" id="d3" name="diet" value="kosher" onclick="checkDiet()">
+        <label for="d3">Kosher</label><br>
+
+        <input type="radio" id="d4" name="diet" value="halal" onclick="checkDiet()">
+        <label for="d4">Halal</label><br>
+
+        <input type="radio" id="d5" name="diet" value="other" id="dietOther" onclick="checkDiet()">
+        <label for="d5">Other</label>
+      </p>
+
+      <p id="dietBox" style="display: none;">
+        <label for="dietDetails">Specify Diet Details:</label><br>
+        <input type="text" id="dietDetails" name="dietDetails">
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Payment Details</legend>
+
+      <p>
+        <label for="cardNumber">Card Number:</label><br>
+        <input type="text" id="cardNumber" name="cardNumber" pattern="[0-9\s]{13,19}" required autocomplete="cc-number">
+      </p>
+
+      <p>
+        <label for="expiryDate">Expiry Date:</label><br>
+        <input type="month" id="expiryDate" name="expiryDate" required autocomplete="cc-exp">
+      </p>
+
+      <p>
+        <label for="cvv">CVV:</label><br>
+        <input type="password" id="cvv" name="cvv" pattern="[0-9]{3,4}" maxlength="4" required autocomplete="cc-csc">
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Agreements</legend>
+
+      <p>
+        <input type="checkbox" id="terms" name="terms" required>
+        <label for="terms">I agree to the Terms and Conditions</label>
+      </p>
+    </fieldset>
+
+    <br>
+    <button type="submit">Register</button>
+
+  </form>
+
+  <script>
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    document.getElementById('expiryDate').min = yyyy + '-' + mm;
+
+    function checkTicket() {
+      const ticket = document.getElementById('ticketType').value;
+      const studentBox = document.getElementById('studentBox');
+      const studentInput = document.getElementById('studentId');
+
+      if (ticket === 'student') {
+        studentBox.style.display = 'block';
+        studentInput.required = true;
+      } else {
+        studentBox.style.display = 'none';
+        studentInput.required = false;
+      }
+    }
+
+    function checkDiet() {
+      const isOther = document.getElementById('d5').checked;
+      const dietBox = document.getElementById('dietBox');
+      const dietInput = document.getElementById('dietDetails');
+
+      if (isOther) {
+        dietBox.style.display = 'block';
+        dietInput.required = true;
+      } else {
+        dietBox.style.display = 'none';
+        dietInput.required = false;
+      }
+    }
+  </script>
+
+</body>
+</html>
